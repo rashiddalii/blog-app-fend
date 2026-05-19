@@ -1,8 +1,19 @@
+import { useState } from "react";
+
 function CTA({title,color,para="This is the default message"}) {
+
+  const [count,setCount] = useState(0)
+
+  function handleCount(){
+    setCount( c => c + 1)
+  }
+
   return (
     <>
       <button style={{color}} > {title}</button>
       <p>{para}</p>
+      <button onClick={handleCount}>Like</button>
+      <span>Like count: {count}</span>
     </>
   );
 }
