@@ -1,27 +1,27 @@
 import { useState } from "react";
 
-const posts = [
-  {
-    id: 0,
-    title: "React is fun",
-    author: "Rashid",
-    content: "Start learning the React. It's great beleive me.",
-  },
-  {
-    id: 1,
-    title: "Faith, Emotions and Desires",
-    author: "Think and Grow Rich",
-    content:
-      "when these three combined then nothing can stop you to achieve your goal",
-  },
-  {
-    id: 2,
-    title: "WhatsApp integrations",
-    author: "Rahid",
-    content:
-      "Whatsapp integrations help you to scale your business and get more sales",
-  },
-];
+// const posts = [
+//   {
+//     id: 0,
+//     title: "React is fun",
+//     author: "Rashid",
+//     content: "Start learning the React. It's great beleive me.",
+//   },
+//   {
+//     id: 1,
+//     title: "Faith, Emotions and Desires",
+//     author: "Think and Grow Rich",
+//     content:
+//       "when these three combined then nothing can stop you to achieve your goal",
+//   },
+//   {
+//     id: 2,
+//     title: "WhatsApp integrations",
+//     author: "Rahid",
+//     content:
+//       "Whatsapp integrations help you to scale your business and get more sales",
+//   },
+// ];
 
 function CTA({ title, color, para = "This is the default message" }) {
   const [count, setCount] = useState(0);
@@ -70,7 +70,33 @@ function PostCard({ post }) {
 }
 
 function App() {
+  
+  const [title,setTitle] = useState('')
+  const [author,setAuthor] = useState('')
+  const [content,setContent] = useState('')
+  const [posts,setPosts] = useState([])
+
   const postLists = posts.map((post) => <PostCard key={post.id} post={post} />);
+
+  function handleSubmit(e){
+    e.preventDefault()
+    setPosts(prevPosts => [...prevPosts, {id:Date.now(),title,author,content}])
+    setTitle('')
+    setAuthor('')
+    setContent('')
+  }
+
+  function handleTitle(e){
+    setTitle(e.target.value)
+  }
+
+  function handleAuthor(e){
+    setAuthor(e.target.value)
+  }
+
+  function handleContent(e){
+    setContent(e.target.value)
+  }
 
   return (
     <>
@@ -88,8 +114,20 @@ function App() {
         <CTA
           title={"get it done"}
           color={"#0400ff"}
-          para={"THis is how it dones"}
+          para={"This is how it dones"}
         />
+      </Section>
+      <Section>
+        <h2>Add a new Post</h2>
+        <form onSubmit={handleSubmit} method="POST">
+          <label>Title  </label>
+          <input name="title" value={title} onChange={handleTitle} placeholder="enter title" type="text"/> <br/>
+          <label>Author  </label>
+          <input name="author" value={author} onChange={handleAuthor} placeholder="enter author" type="text"/> <br/>
+          <label>Content  </label>
+          <textarea name="content" value={content} onChange={handleContent} placeholder="enter content"/> <br/>
+          <button>Publish</button>
+        </form>
       </Section>
       <Section>
         <h2>All Posts</h2>
